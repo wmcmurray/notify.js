@@ -68,7 +68,7 @@ Notify.isSupported = function(perm) {
     }
 
     if (perm === 'granted' || N.permission === 'granted') {
-        throw new Error('You must only call this before calling Notification.requestPermission(), otherwise this feature detect would trigger an actual notification!');
+        return true;
     }
 
     try {
