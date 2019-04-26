@@ -24,10 +24,10 @@ describe('isSupported', function() {
         expect(Notify.isSupported()).toBeTruthy();
     });
 
-    it('should throw an error if permission has already been granted', function() {
+    it('should return true when permission has already been granted', function() {
         expect(function() {
             Notify.isSupported('granted');
-        }).toThrow();
+        }).toBeTruthy();
     });
 });
 
