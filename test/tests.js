@@ -52,6 +52,7 @@ describe('permission', function() {
     describe('requestPermission (granted)', function() {
         beforeEach(function(done) {
             spyOn(window.Notification, 'requestPermission').and.callFake(function(cb) {
+                Object.defineProperty(window.Notification, 'permission', { get() { return 'granted'; } });
                 cb('granted');
                 done();
             });
@@ -66,6 +67,7 @@ describe('permission', function() {
     describe('requestPermission (denied)', function() {
         beforeEach(function(done) {
             spyOn(window.Notification, 'requestPermission').and.callFake(function(cb) {
+                Object.defineProperty(window.Notification, 'permission', { get() { return 'denied'; } });
                 cb('denied');
                 done();
             });

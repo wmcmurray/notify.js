@@ -81,21 +81,27 @@ Notify.isSupported = function(perm) {
     return true;
 };
 
-// true if the permission is not granted
-Notify.needsPermission = (N && N.permission && N.permission === 'granted') ? false : true;
+// define Notify.needsPermission : true if the permission is not granted
+if (N && N.permission) {
+    Object.defineProperty(Notify, 'needsPermission', {
+        get() {
+            return N.permission === 'granted' ? false : true;
+        }
+    });
+} else {
+    Notify.needsPermission = true;
+}
 
 // asks the user for permission to display notifications.  Then calls the callback functions is supplied.
 Notify.requestPermission = function(onPermissionGrantedCallback, onPermissionDeniedCallback) {
     N.requestPermission(function(perm) {
         switch (perm) {
         case 'granted':
-            Notify.needsPermission = false;
             if (isFunction(onPermissionGrantedCallback)) {
                 onPermissionGrantedCallback();
             }
             break;
         case 'denied':
-            Notify.needsPermission = true;
             if (isFunction(onPermissionDeniedCallback)) {
                 onPermissionDeniedCallback();
             }
